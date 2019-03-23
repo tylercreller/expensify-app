@@ -21,7 +21,11 @@ const setCount = ({ count = 0 } = {}) => ({
 	count
 });
 
-const store = createStore((state = { count: 0 }, action) => {
+// Reducers - associate an action to how it effects state
+// 1. Reducers are pure functions
+// 2. Never change state or action (params)
+//
+const countReducer = (state = { count: 0 }, action) => {
 	switch (action.type) {
 		case 'INCREMENT':
 			return { count: state.count + action.incrementBy };
@@ -34,7 +38,9 @@ const store = createStore((state = { count: 0 }, action) => {
 		default:
 			return state;
 	}
-});
+};
+
+const store = createStore(countReducer);
 
 const unsub = store.subscribe(() => {
 	console.log(store.getState());
